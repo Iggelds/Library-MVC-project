@@ -5,24 +5,24 @@
     <title>Show book</title>
 </head>
 <body>
-<p th:text="${book.getName() + ', ' + book.getAuthor()+ ', ' + book.getYear()}">VALUE</p>
-<p th:text="${'ID: '+ book.getId()}">VALUE</p>
+<p th:text="${books.getTitle() + ', ' + books.getAuthor()+ ', ' + books.getYear()}">VALUE</p>
+<p th:text="${'ID: '+ books.getId()}">VALUE</p>
 
 <div th:if="${owner}">
-    <span>The book was given to this visitor: </span> <span th:text="${owner.getName()}">Visitor's name</span>
+    <span>The book was given to this visitor: </span> <span th:text="${owner.getFullName()}">Visitor's name</span>
 
-    <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+    <form th:method="PATCH" th:action="@{/books/{id}/release(id=${books.getId()})}">
         <input type="submit" value="Release the book">
     </form>
 </div>
 
 <div th:if="${people}">
     <span>This book is available and can be assigned</span>
-    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${books.getId()})}">
         <label for="person">Choose a visitor</label>
         <select th:object="${person}" th:field="*{id}" id="person">
             <option th:each="person : ${people}" th:value="${person.getId()}"
-                    th:text="${person.getName()}"></option>
+                    th:text="${person.getFullName()}"></option>
         </select>
 
         <input type="submit" value="Assign a book"/>
@@ -30,11 +30,11 @@
 </div>
 
 <hr/>
-<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${books.getId()})}">
     <input type="submit" value="Edit"/>
 </form>
 <br/>
-<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+<form th:method="DELETE" th:action="@{/books/{id}(id=${books.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
 
